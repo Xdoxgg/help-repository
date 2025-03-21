@@ -1,0 +1,72 @@
+﻿body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.card-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(65, 29, 47);
+    border-radius: 20px;
+    width: 450px;
+    height: 600px;
+    flex-direction: column;
+}
+
+.card-main button{
+    background:  rgb(226, 157, 195);
+    color:  rgb(255, 255, 255);
+    height: 48px;
+    width: 300px;
+    font-size: 34px;
+    border-radius: 20px;
+    transition: border-radius 0.3s ease;
+
+}
+
+.card-main button:hover{
+    border-radius: 0px;
+}
+
+.card-main-data {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.card-main-data span {
+    color:  rgb(255, 255, 255);
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.card-main-data input {
+    font-size: 16px;
+    height: 35px;
+    width: 200px;
+    border-radius: 15px;
+    background: rgb(255, 255, 255);
+    caret-color: transparent;
+    text-align: center;
+    transition: border-radius 0.3s ease;
+}
+
+
+.card-main-data input:focus {
+    outline: none;
+    border-radius: 0px;
+}
+
+
+.enter-words {
+    position: relative;
+    bottom: 100px;
+    display: flex;
+    font-size: 40px;
+    color:  rgb(255, 255, 255);
+}

@@ -32,33 +32,12 @@
 </head>
 
 <body>
-<form class="card-main">
-    <label class="enter-words">Вход в аккаунт</label>
-    <label class="card-main-data">
-        <span>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <input required="" placeholder="" type="text" id="user_name" name="user_name">
-    </label>
-    <label class="card-main-data">
-        <span>Password</span>
-        <input required="" placeholder="" type="password" id="user_password" name="user_password">
-    </label>
-    <button onclick="register()">Войти</button>
-</form>
-
+<label for="tableName">Введите название таблицы для редактирования
+    <input id="tableName">
+</label>
 </body>
 <script>
 
-    function register() {
-        const name = document.getElementById('user_name').value;
-        const password = document.getElementById('user_password').value;
-        if (name == 'admin' && password == 'admin@admin.com') {
-            document.location.href = '/pages/personalAccount.html'
-            
-        }
-        else{
-            alert('неправильные входные значения')
-        }
-    }
 
 
 </script>
