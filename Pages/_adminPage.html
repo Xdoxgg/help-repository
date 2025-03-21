@@ -23,11 +23,10 @@
 
 <h2>Выберите таблицу</h2>
 <select id="tableSelector" onchange="fetchData()">
-    <option value="teams_data">Команды</option>
     <option value="characters">Персонажи</option>
-    
-    <option value="team_to_character">Связь команд и персонажей</option>
+    <option value="teams_data">Команды</option>
     <option value="users">Пользователи</option>
+    <option value="team_to_character">Связь команд и персонажей</option>
 </select>
 
 <h2>Данные</h2>
@@ -42,10 +41,20 @@
     </tbody>
 </table>
 
+<h2>Добавить/Изменить элемент</h2>
+<form id="dataForm" onsubmit="return handleFormSubmit(event)">
+    <input type="hidden" id="itemId" value="">
+    <div id="formFields">
+        <!-- Поля формы будут динамически добавлены здесь -->
+    </div>
+    <button type="submit">Сохранить</button>
+</form>
+
 <script>
     async function fetchData() {
         const tableSelector = document.getElementById('tableSelector');
         const selectedTable = tableSelector.value;
+
         let response, data;
         try {
             response = await fetch(`/api/${selectedTable}`);
@@ -54,8 +63,8 @@
             }
 
             data = await response.json();
-            console.log('Полученные данные:', data); // Отладка: выводим данные в консоль
             updateTable(data);
+            updateFormFields(selectedTable); // Обновляем поля формы в зависимости от выбранной таблицы
         } catch (error) {
             console.error('Ошибка при получении данных:', error);
         }
@@ -81,7 +90,7 @@
         // Заполнение заголовков таблицы
         headers.forEach(header => {
             const th = document.createElement('th');
-            th.innerText = header.charAt(0).toUpperCase() + header.slice(1); // Делаем первую букву заглавной
+            th.innerText = header.charAt(0).toUpperCase() + header.slice(1);
             tableHeader.appendChild(th);
         });
 
@@ -90,8 +99,139 @@
             const row = tableBody.insertRow();
             headers.forEach(header => {
                 const cell = row.insertCell();
-                cell.innerText = item[header] !== undefined ? item[header] : ''; // Проверяем наличие ключа
+                cell.innerText = item[header] !== undefined ? item[header] : '';
             });
+
+            // Добавляем кнопку для редактирования
+            const editCell = row.insertCell();
+            const editButton = document.createElement('button');
+            editButton.innerText = 'Редактировать';
+            editButton.onclick = () => editItem(item);
+            editCell.appendChild(editButton);
+
+            // Добавляем кнопку для удаления
+            const deleteCell = row.insertCell();
+            const deleteButton = document.createElement('button');
+            deleteButton.innerText = 'Удалить';
+            deleteButton.onclick = () => deleteItem(item.id);
+            deleteCell.appendChild(deleteButton);
+        });
+    }
+
+    function editItem(item) {
+        document.getElementById('itemId').value = item.id;
+        const fields = document.querySelectorAll('#formFields input');
+        fields.forEach(field => {
+            field.value = item[field.name] || ''; // Заполняем поля формы данными элемента
+        });
+    }
+
+    async function deleteItem(id) {
+        if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
+            const tableSelector = document.getElementById('tableSelector');
+            const selectedTable = tableSelector.value;
+            try {
+                const response = await fetch(`/api/${selectedTable}_delete?id=${encodeURIComponent(id)}`,{
+                    method:'DELETE'
+                    }
+                );
+                if (!response.ok) {
+                    throw new Error('Ошибка при удалении элемента: ' + response.statusText);
+                }
+                alert('start')
+                
+                fetchData(); // Обновляем данные после удаления
+            } catch (error) {
+                console.error('Ошибка при удалении элемента:', error);
+            }
+        }
+    }
+
+    async function handleFormSubmit(event) {
+        event.preventDefault();
+
+        const id = document.getElementById('itemId').value;
+        const tableSelector = document.getElementById('tableSelector');
+        const selectedTable = tableSelector.value;
+
+        const formData = {};
+        const fields = document.querySelectorAll('#formFields input');
+        fields.forEach(field => {
+            formData[field.name] = field.value; // Собираем данные из формы
+        });
+
+        try {
+            let response;
+            if (id) {
+                // Обновление элемента
+                response = await fetch(`/api/${selectedTable}/update`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ...formData, id: parseInt(id) })
+                });
+            } else {
+                // Добавление нового элемента
+                response = await fetch(`/api/${selectedTable}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+            }
+
+            if (!response.ok) {
+                throw new Error('Ошибка при сохранении элемента: ' + response.statusText);
+            }
+
+            // Сброс формы и обновление данных
+            document.getElementById('dataForm').reset();
+            fetchData();
+        } catch (error) {
+            console.error('Ошибка при сохранении элемента:', error);
+        }
+    }
+
+    function updateFormFields(selectedTable) {
+        const formFields = document.getElementById('formFields');
+        formFields.innerHTML = ''; // Очищаем предыдущие поля
+
+        let fields;
+        if (selectedTable === 'characters') {
+            fields = [
+                { name: 'name', label: 'Имя' },
+                { name: 'role', label: 'Роль' },
+                { name: 'lore', label: 'Лор' },
+                { name: 'img', label: 'Изображение URL' }
+            ];
+        } else if (selectedTable === 'teams') {
+            fields = [
+                { name: 'name', label: 'Имя' },
+                { name: 'orientation', label: 'Ориентация' }
+            ];
+        } else if (selectedTable === 'users') {
+            fields = [
+                { name: 'name', label: 'Имя' },
+                { name: 'password', label: 'Пароль' }
+            ];
+        } else if (selectedTable === 'team_to_character') {
+            fields = [
+                { name: 'team_id', label: 'ID Команды' },
+                { name: 'character_id', label: 'ID Персонажа' }
+            ];
+        }
+
+        fields.forEach(field => {
+            const label = document.createElement('label');
+            label.innerText = field.label + ':';
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = field.name;
+            input.required = true;
+            formFields.appendChild(label);
+            formFields.appendChild(input);
         });
     }
 

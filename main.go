@@ -7,9 +7,11 @@ import (
 	_ "github.com/lib/pq"
 	"html/template"
 	"net/http"
+	"strconv"
 )
 
 type IdToId struct {
+	ID  int `json:"id"`
 	Id1 int `json:"id1"`
 	Id2 int `json:"id2"`
 }
@@ -190,7 +192,7 @@ func getAllTeamsDataHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllTeamsData(db *sql.DB) ([]DataTeam, error) {
-	rows, err := db.Query("SELECT name, orientation FROM teams")
+	rows, err := db.Query("SELECT * FROM teams")
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -199,7 +201,7 @@ func getAllTeamsData(db *sql.DB) ([]DataTeam, error) {
 	var characters []DataTeam
 	for rows.Next() {
 		var character DataTeam
-		err := rows.Scan(&character.Name, &character.Orientation)
+		err := rows.Scan(&character.ID, &character.Name, &character.Orientation)
 		characters = append(characters, character)
 		if err != nil {
 			return nil, err
@@ -231,7 +233,7 @@ func getAllTeamsToDataHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllTeamsToData(db *sql.DB) ([]IdToId, error) {
-	rows, err := db.Query("SELECT team_id, character_id FROM team_to_character")
+	rows, err := db.Query("SELECT * FROM team_to_character")
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -240,7 +242,7 @@ func getAllTeamsToData(db *sql.DB) ([]IdToId, error) {
 	var characters []IdToId
 	for rows.Next() {
 		var character IdToId
-		err := rows.Scan(&character.Id1, &character.Id2)
+		err := rows.Scan(&character.ID, &character.Id1, &character.Id2)
 		characters = append(characters, character)
 		if err != nil {
 			return nil, err
@@ -291,6 +293,172 @@ func getAllUsers(db *sql.DB) ([]User, error) {
 
 }
 
+func deleteTeamToCharacterHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Метод не разрешен", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Извлекаем ID из параметров запроса
+	idStr := r.URL.Query().Get("id")
+	if idStr == "" {
+		http.Error(w, "ID не может быть пустым", http.StatusBadRequest)
+		return
+	}
+
+	// Преобразуем ID в целое число
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, "Неверный формат ID", http.StatusBadRequest)
+		return
+	}
+
+	db, err := connectDB()
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+
+	// Выполняем SQL-запрос на удаление
+	_, err = db.Exec("DELETE FROM team_to_character WHERE id = $1", id)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Возвращаем статус 204 No Content
+	w.WriteHeader(http.StatusNoContent)
+}
+
+func deleteTeamHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Метод не разрешен", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Извлекаем ID из параметров запроса
+	idStr := r.URL.Query().Get("id")
+	if idStr == "" {
+		http.Error(w, "ID не может быть пустым", http.StatusBadRequest)
+		return
+	}
+
+	// Преобразуем ID в целое число
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, "Неверный формат ID", http.StatusBadRequest)
+		return
+	}
+
+	db, err := connectDB()
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+
+	// Выполняем SQL-запрос на удаление
+	_, err = db.Exec("DELETE FROM teams WHERE id = $1", id)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Возвращаем статус 204 No Content
+	w.WriteHeader(http.StatusNoContent)
+}
+
+func deleteCharactersHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Метод не разрешен", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Извлекаем ID из параметров запроса
+	idStr := r.URL.Query().Get("id")
+	if idStr == "" {
+		http.Error(w, "ID не может быть пустым", http.StatusBadRequest)
+		return
+	}
+
+	// Преобразуем ID в целое число
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, "Неверный формат ID", http.StatusBadRequest)
+		return
+	}
+
+	db, err := connectDB()
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+
+	// Выполняем SQL-запрос на удаление
+	_, err = db.Exec(`
+DELETE FROM team_to_character WHERE team_id = $1
+DELETE FROM characters WHERE id = $1
+`, id)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Возвращаем статус 204 No Content
+	w.WriteHeader(http.StatusNoContent)
+}
+
+func deleteUsersHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Метод не разрешен", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Извлекаем ID из параметров запроса
+	idStr := r.URL.Query().Get("id")
+	if idStr == "" {
+		http.Error(w, "ID не может быть пустым", http.StatusBadRequest)
+		return
+	}
+
+	// Преобразуем ID в целое число
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, "Неверный формат ID", http.StatusBadRequest)
+		return
+	}
+
+	db, err := connectDB()
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+
+	// Выполняем SQL-запрос на удаление
+	_, err = db.Exec("DELETE FROM users WHERE id = $1", id)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Возвращаем статус 204 No Content
+	w.WriteHeader(http.StatusNoContent)
+}
 func handleRequest() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
 	http.Handle("/Pages/", http.StripPrefix("/Pages/", http.FileServer(http.Dir("./Pages/"))))
@@ -302,6 +470,10 @@ func handleRequest() {
 	http.HandleFunc("/api/teams_data", getAllTeamsDataHandler)
 	http.HandleFunc("/api/team_to_character", getAllTeamsToDataHandler)
 	http.HandleFunc("/api/users", getAllUsersHandler)
+	http.HandleFunc("/api/team_to_character_delete", deleteTeamToCharacterHandler)
+	http.HandleFunc("/api/teams_data_delete", deleteTeamHandler)
+	http.HandleFunc("/api/characters_delete", deleteCharactersHandler)
+	http.HandleFunc("/api/users_delete", deleteUsersHandler)
 
 	////////////
 	err := http.ListenAndServe(":8080", nil)
