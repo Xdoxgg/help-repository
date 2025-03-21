@@ -32,7 +32,7 @@
 </head>
 
 <body>
-<form class="card-main">
+<form class="card-main" action="_adminPage.html">
     <label class="enter-words">Вход в аккаунт</label>
     <label class="card-main-data">
         <span>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -51,13 +51,18 @@
     function register() {
         const name = document.getElementById('user_name').value;
         const password = document.getElementById('user_password').value;
-        if (name == 'admin' && password == 'admin@admin.com') {
-            document.location.href = '/pages/personalAccount.html'
-            
+        if (name == 'admin@admin.com' && password == 'admin') {
+            goToPage('../Pages/_adminPage.html')
+
+
         }
         else{
             alert('неправильные входные значения')
         }
+    }
+    
+    function goToPage(link){
+        document.location.href =link
     }
 
 

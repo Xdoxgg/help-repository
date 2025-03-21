@@ -9,6 +9,11 @@ import (
 	"net/http"
 )
 
+type IdToId struct {
+	Id1 int `json:"id1"`
+	Id2 int `json:"id2"`
+}
+
 type Character struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`

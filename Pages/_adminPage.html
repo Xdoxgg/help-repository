@@ -27,17 +27,60 @@
     </style>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Coiny&display=swap');
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
 
 </head>
 
 <body>
-<label for="tableName">Введите название таблицы для редактирования
-    <input id="tableName">
-</label>
+<h1>Выберите таблицу</h1>
+<select id="tableSelect" onchange="updateTable()">
+    <option value="">--Выберите таблицу--</option>
+    <option value="table1">Таблица 1</option>
+    <option value="table2">Таблица 2</option>
+</select>
 </body>
 <script>
+    const tables = {
+        table1: [
+            { name: "Элемент 1", value: "Значение 1" },
+            { name: "Элемент 2", value: "Значение 2" }
+        ],
+        table2: [
+            { name: "Элемент A", value: "Значение A" },
+            { name: "Элемент B", value: "Значение B" }
+        ]
+    };
 
+    function updateTable() {
+        const select = document.getElementById("tableSelect");
+        const selectedTable = select.value;
+        const container = document.getElementById("tableContainer");
+        container.innerHTML = ""; // Очистить предыдущую таблицу
+
+        if (selectedTable) {
+            const data = tables[selectedTable];
+            let tableHTML = "<table><tr><th>Название</th><th>Значение</th></tr>";
+
+            data.forEach(item => {
+                tableHTML += `<tr><td>${item.name}</td><td>${item.value}</td></tr>`;
+            });
+
+            tableHTML += "</table>";
+            container.innerHTML = tableHTML;
+        }
+    }
 
 
 </script>
