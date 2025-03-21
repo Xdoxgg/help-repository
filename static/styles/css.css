@@ -1,0 +1,12 @@
+.set {
+    display: flex; /* Use flexbox layout */
+    flex-wrap: wrap; /* Allow wrapping to the next line if necessary */
+    justify-content: center; /* Center the items horizontally */
+    gap: 10px; /* Optional: Add space between items */
+}
+/* .centerr {
+    /* } */
+
+/* .conteiner {
+    margin: 10px; /* Добавляем небольшой отступ между элементами */
+/* } */ 

@@ -1,0 +1,52 @@
+/* button {
+    color: #090909;
+  padding: 0.7em 1.7em;
+  font-size: 18px;
+  border-radius: 0.5em;
+  background: rgb(27, 31, 40);
+  cursor: pointer;
+  border: 1px solid rgb(23, 29, 41);
+  transition: all 0.3s;
+  box-shadow: 6px 6px 12px rgb(13, 19, 26);, -6px -6px 12px #ffffff;
+}
+button:active {
+    color: #666;
+    box-shadow: inset 4px 4px 12px rgb(12, 15, 22), inset -4px -4px 12px rgb(13, 17, 26);;
+} */
+button {
+    /* Variables */
+    --button_radius: 0.75em;
+    --button_color: rgb(255, 255, 255);
+    --button_outline_color: rgb(112, 150, 201);
+    font-size: 17px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--button_radius);
+    background: var(--button_outline_color);
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+  .button_top {
+    display: block;
+    box-sizing: border-box;
+    border: 2px solid var(--button_outline_color);
+    border-radius: var(--button_radius);
+    padding: 0.75em 1.5em;
+    background: var(--button_color);
+    color: var(--button_outline_color);
+    transform: translateY(-0.2em);
+    transition: transform 0.1s ease;
+  }
+  
+  button:hover .button_top {
+    /* Pull the button upwards when hovered */
+    transform: translateY(-0.33em);
+  }
+  
+  button:active .button_top {
+    /* Push the button downwards when pressed */
+    transform: translateY(0);
+  }
+  
+

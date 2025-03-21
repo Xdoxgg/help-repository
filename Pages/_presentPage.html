@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="../static/styles/styles.css">
+    <link rel="stylesheet" href="../static/styles/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Red+Rose:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="container">
+      
+  </div>
+
+</body>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const theme = urlParams.get('param1');
+    const img = urlParams.get('param4');
+    document.title = theme;
+
+    function loadPage() {
+
+        const container = document.getElementById('container');
+        const newDiv = document.createElement('div'); // Создаем новый div
+
+        // Проверяем, существует ли img
+        if (img) {
+            newDiv.innerHTML = `
+            <img src="../static/images/charactersDataImages/${img}.png" alt="${theme}">
+        `;
+        } else {
+            newDiv.innerHTML = `<p>Изображение не найдено.</p>`;
+        }
+
+        container.appendChild(newDiv);
+    }
+
+    document.addEventListener("DOMContentLoaded", loadPage);
+    
+</script>
+</html>

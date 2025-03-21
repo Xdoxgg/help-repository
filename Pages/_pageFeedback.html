@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback form</title>
+    <!-- <link rel="stylesheet" href="static/styles/styles.css"> -->
+    <link rel="stylesheet" href="../static/styles/characters.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<style>
+        .conteiner {
+            margin: 15px; /* Add some space between characters */
+            display: inline-block; /* Позволяет располагать элементы в строку */
+            /* text-align: center; Центрирует текст под изображением */
+        }
+        .set {
+            margin-top: 20px; /* Add space above the character list */
+        }
+        .hidden {
+            display: none; /* Class to hide elements */
+        }
+        .ww {
+            margin-top: 5px; /* Уменьшает отступ сверху для имен */
+            font-size: 20px; /* Увеличиваем размер шрифта */
+            font-weight: bold; /* Делаем шрифт жирным */
+}
+</style>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    .container {
+        display: flex;
+    }
+    .character-list {
+        display: flex;
+        flex-direction: column;
+        margin-right: 20px;
+    }
+    .character-item {
+        margin-bottom: 10px;
+    }
+    h1 {
+        color: #cf8a9f;
+    }
+    p{
+        color: #cf8a9f;
+    }
+    label{
+        color: #cf8a9f;
+    }
+    .description {
+        max-width: 400px;
+    }
+    .description {
+    color: #cf8a9f; /* Change this to your desired text color */
+    line-height: 1.2; /* Reduces the space between lines of text */
+    margin-top: 10px; /* Adjusts the space above the description */
+    margin-bottom: 10px; /* Adjusts the space below the description */
+}
+
+.description p {
+    margin: 5px 0; /* Reduces the space between paragraphs */
+}
+    
+</style>
+<body>
+    <div class="Centroo">
+        <p>
+            <a href="_index.html"><button>
+                <span class="button_top"> Back </span>
+            </button></a>
+            <a href="#"><button>
+                <span class="button_top"> Send message </span>
+            </button></a>
+
+        </p>
+    </div>
+    <form id="feedbackForm">
+        <label for="message">Ваше сообщение:</label><br>
+        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br>
+    </form>
+    <script>
+        document.getElementById('feedbackForm').onsubmit = function(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение формы
+
+            const message = document.getElementById('message').value;
+
+            fetch('send_message.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.status);
+                document.getElementById('feedbackForm').reset(); // Очищаем форму
+            })
+            .catch(error => console.error('Ошибка:', error));
+        };
+    </script>
+</body>
+</html>

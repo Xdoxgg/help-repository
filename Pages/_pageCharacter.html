@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Characters</title>
+    <!-- <link rel="stylesheet" href="static/styles/styles.css"> -->
+    <link rel="stylesheet" href="../static/styles/characters.css">
+    <link rel="stylesheet" type="text/css" href="css.css">
+</head>
+<style>
+    
+
+
+        .conteiner {
+            margin: 15px; /* Add some space between characters */
+            display: inline-block; /* Позволяет располагать элементы в строку */
+            /* text-align: center; Центрирует текст под изображением */
+        }
+        .set {
+            margin-top: 20px; /* Add space above the character list */
+        }
+        .hidden {
+            display: none; /* Class to hide elements */
+        }
+        .ww {
+            margin-top: 5px; /* Уменьшает отступ сверху для имен */
+            font-size: 20px; /* Увеличиваем размер шрифта */
+            font-weight: bold; /* Делаем шрифт жирным */
+}
+</style>
+<body>
+     <div class="Centroo">
+        <p>
+            <a href="_index.html"><button>
+                <span class="button_top"> Back </span>
+            </button></a>
+            <a href="#" onclick="filterCharacters('shooter')"><button>
+                <span class="button_top"> Shooter </span>
+            </button></a>
+            <a href="#" onclick="filterCharacters('mage')"><button>
+                <span class="button_top"> Mage </span>
+            </button></a>
+            <a href="#" onclick="filterCharacters('assassin')"><button>
+                <span class="button_top"> Assassin </span>
+            </button></a>
+            <a href="#" onclick="filterCharacters('fighter')"><button>
+                <span class="button_top"> Fighter </span>
+            </button></a>
+            <a href="#" onclick="filterCharacters('tank')"><button>
+                <span class="button_top"> Tank </span>
+            </button></a>
+            <a href="#" onclick="filterCharacters('support')"><button>
+                <span class="button_top"> Support </span>
+            </button></a>
+            <a href="#" onclick="showAllCharacters()"><button>
+                <span class="button_top"> Show All </span>
+            </button></a>
+
+        </p>
+    </div>
+
+<div class="centerr">
+    <div class="set">
+        <div class="conteiner fighter">
+            <a href="lukas.html">
+            <img src="../static/images/charactersImages/лукас.png" alt="lukas">
+        </a>
+            <p class="ww">Lukas</p>
+        </div>
+        <div class="conteiner fighter assassin">
+            <a href="suyou.html">
+                <img src="../static/images/charactersImages/суё.png" alt="suyou">
+            </a>
+            <p class="ww">Suyou</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="zhuxin.html">
+                <img src="../static/images/charactersImages/чжунсинь.png" alt="картинка">
+            </a>
+            <p class="ww">Zhuxin</p>
+        </div>
+        <div class="conteiner tank support">
+            <a href="chip.html">
+            <img src="../static/images/charactersImages/чип.png" alt="картинка">
+            </a>
+            <p class="ww">Chip</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="cici.html">
+                <img src="../static/images/charactersImages/чичи.png" alt="картинка">
+            </a>
+            <p class="ww">Cici</p>
+        </div>
+        <div class="conteiner assassin">
+            <a href="nolan.html">
+                <img src="../static/images/charactersImages/нолан.png" alt="картинка">
+            </a>
+            <p class="ww">Nolan</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="ixia.html">
+                <img src="../static/images/charactersImages/иксия.png" alt="картинка">
+            </a>
+            <p class="ww">Ixia</p>
+        </div>
+        <div class="conteiner fighter assassin">
+            <a href="arlott.html">
+                <img src="../static/images/charactersImages/арлотт.png" alt="картинка">
+            </a>            
+            <p class="ww">Arlott</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="novaria.html">
+                <img src="../static/images/charactersImages/новария.png" alt="картинка">
+            </a>
+            <p class="ww">Novaria</p>
+        </div>
+    <!-- </div>
+    <div class="set"> -->
+        <div class="conteiner assassin">
+            <a href="djoy.html">
+            <img src="../static/images/charactersImages/джой.png" alt="картинка">
+            </a>
+            <p class="ww">Djoy</p>
+        </div>
+        <div class="conteiner tank fighter">
+            <a href="fredlinn.html">
+            <img src="../static/images/charactersImages/фрэдлинн.png" alt="картинка">
+            </a>
+            <p class="ww">Fredlinn</p>
+        </div>
+        <div class="conteiner mage fighter">
+            <a href="julian.html">
+            <img src="../static/images/charactersImages/джулиан.png" alt="картинка">
+            </a>
+            <p class="ww">Julian</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="xavierr.html">
+            <img src="../static/images/charactersImages/ксавьер.png" alt="картинка">
+            </a>
+            <p class="ww">Xavierr</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="melissa.html">
+            <img src="../static/images/charactersImages/мелисса.png" alt="картинка">
+            </a>
+            <p class="ww">Melissa</p>
+        </div>
+        <div class="conteiner assassin fighter">
+            <a href="yin%20.htmlml">
+            <img src="../static/images/charactersImages/инь.png" alt="картинка">
+            </a>
+            <p class="ww">Yin</p>
+        </div>
+        <div class="conteiner support">
+            <a href="floryn.html">
+            <img src="../static/images/charactersImages/флорин.png" alt="картинка">
+            </a>
+            <p class="ww">Floryn</p>
+        </div>
+        <div class="conteiner mage tank">
+            <a href="edith.html">
+            <img src="../static/images/charactersImages/эдит.png" alt="картинка">
+            </a>
+            <p class="ww">Edith</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="valentina.html">
+            <img src="../static/images/charactersImages/валентина.png" alt="картинка">
+            </a>
+            <p class="ww">Valentina</p>
+        </div>
+    <!-- </div>
+    <div class="set"> -->
+        <div class="conteiner assassin">
+            <a href="eymon.html">
+            <img src="../static/images/charactersImages/эймон.png" alt="картинка">
+            </a>
+            <p class="ww">Eymon</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="aoolus.html">
+            <img src="../static/images/charactersImages/аулус.png" alt="картинка">
+            </a>
+            <p class="ww">Aoolus</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="natan.html">
+            <img src="../static/images/charactersImages/натан.png" alt="картинка">
+            </a>
+            <p class="ww">Natan</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="phoviuus.html">
+            <img src="../static/images/charactersImages/фовиус.png" alt="картинка">
+            </a>
+            <p class="ww">Phoviuus</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="beatris.html">
+            <img src="../static/images/charactersImages/беатрис.png" alt="картинка">
+            </a>
+            <p class="ww">Beatris</p>
+        </div>
+        <div class="conteiner tank">
+            <a href="gloo.html">
+            <img src="../static/images/charactersImages/глу.png" alt="картинка">
+            </a>
+            <p class="ww">Gloo</p>
+        </div>
+        <div class="conteiner assassin fighter">
+            <a href="paquito.html">
+            <img src="../static/images/charactersImages/пакито.png" alt="картинка">
+            </a>
+            <p class="ww">Paquito</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="yve.html">
+            <img src="../static/images/charactersImages/ив.png" alt="картинка">
+            </a>
+            <p class="ww">Yve</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="broudy.html">
+            <img src="../static/images/charactersImages/броуди.png" alt="картинка">
+            </a>
+            <p class="ww">Broudy</p>
+        </div>
+
+
+        <!-- до сюдава -->
+    <!-- </div>
+    <div class="set"> -->
+        <div class="conteiner ">
+            <a href="bartz.html">
+            <img src="../static/images/charactersImages/барц.png" alt="картинка">
+            </a>
+            <p class="ww">Bartz</p>
+        </div>
+        <div class="conteiner ">
+            <a href="khaleed.html">
+                <img src="../static/images/charactersImages/халид.png" alt="картинка">
+            </a>
+                <p class="ww">Khaleed</p>
+        </div>
+        <div class="conteiner assassin fighter">
+            <a href="benedetta.html">
+                <img src="../static/images/charactersImages/бенедетта.png" alt="картинка">
+            </a>
+                <p class="ww">Benedetta</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="luoyi.html">
+                <img src="../static/images/charactersImages/лои.png" alt="картинка">
+            </a>
+                <p class="ww">Luo Yi</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="yuzhong.html">
+                <img src="../static/images/charactersImages/чонг.png" alt="картинка">
+            </a>
+                <p class="ww">Yu Zhong</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="popol.html">
+                <img src="../static/images/charactersImages/попольикупа.png" alt="картинка">
+            </a>
+                <p class="ww">Popol</p>
+        </div>
+        <div class="conteiner tank">
+            <a href="atlas.html">
+                <img src="../static/images/charactersImages/атлас.png" alt="картинка">
+            </a>
+                <p class="ww">Atlas</p>
+        </div>
+        <div class="conteiner tank support">
+            <a href="carmilla.html">
+                <img src="../static/images/charactersImages/кармилла.png" alt="картинка">
+            </a>
+                <p class="ww">Carmilla</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="cecilion.html">
+                <img src="../static/images/charactersImages/сесилион.png" alt="картинка">
+            </a>
+                <p class="ww">Cecilion</p>
+        </div>
+    <!-- </div>
+    <div class="set"> -->
+        <div class="conteiner fighter">
+            <a href="silvanna.html">
+                <img src="../static/images/charactersImages/сильвана.png" alt="картинка">
+            </a>
+                <p class="ww">Silvanna</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="wanwan.html">
+                <img src="../static/images/charactersImages/ванван.png" alt="картинка">
+            </a>
+            <p class="ww">Wanwan</p>
+        </div>
+        <div class="conteiner tank fighter">
+            <a href="masha.html">
+                <img src="../static/images/charactersImages/маша.png" alt="картинка">
+            </a>
+                <p class="ww">Masha</p>
+        </div>
+        <div class="conteiner tank">
+            <a href="baxii.html">
+                <img src="../static/images/charactersImages/баксий.png" alt="картинка">
+            </a>
+                <p class="ww">Baxii</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="lylia.html">
+                <img src="../static/images/charactersImages/лилия.png" alt="картинка">
+            </a>
+                <p class="ww">Lylia</p>
+        </div>
+        <div class="conteiner fighter assassin">
+            <a href="darioos.html">
+                <img src="../static/images/charactersImages/дариус.png" alt="картинка">
+            </a>
+                <p class="ww">Darioos</p>
+        </div>
+        <div class="conteiner assassin">
+            <a href="ling.html">
+                <img src="../static/images/charactersImages/линг.png" alt="картинка">
+            </a>
+                <p class="ww">Ling</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="xborg.html">
+                <img src="../static/images/charactersImages/иксбокс.png" alt="картинка">
+            </a>
+                <p class="ww">X.Borg</p>
+        </div>
+        <div class="conteiner tank fighter">
+            <a href="terizla.html">
+                <img src="../static/images/charactersImages/тэризла.png" alt="картинка">
+            </a>
+                <p class="ww">Terizla</p>
+        </div>
+    <!-- </div>
+    <div class="set"> -->
+        <div class="conteiner tank mage">
+            <a href="esmeralda.html">
+                <img src="../static/images/charactersImages/эсмеральда.png" alt="картинка">
+            </a>
+                <p class="ww">Esmeralda</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="guinevere.html">
+                <img src="../static/images/charactersImages/гвиневра.png" alt="картинка">
+            </a>
+                <p class="ww">Guinevere</p>
+        </div>
+        <div class="conteiner assassin shooter">
+            <a href="granger.html">
+                <img src="../static/images/charactersImages/гренджер.png" alt="картинка">
+            </a>
+                <p class="ww">Granger</p>
+        </div>
+        <div class="conteiner tank">
+            <a href="khufra.html">
+                <img src="../static/images/charactersImages/хуфра.png" alt="картинка">
+            </a>
+                <p class="ww">Khufra</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="badang.html">
+                <img src="../static/images/charactersImages/баданг.png" alt="картинка">
+            </a>
+                <p class="ww">Badang</p>
+        </div>
+        <div class="conteiner mage support">
+            <a href="faramis.html">
+                <img src="../static/images/charactersImages/фарамис.png" alt="картинка">
+            </a>
+                <p class="ww">Faramis</p>
+        </div>
+        <div class="conteiner assassin mage">
+            <a href="kadita.html">
+                <img src="../static/images/charactersImages/кадита.png" alt="картинка">
+            </a>
+                <p class="ww">Kadita</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="minsittar.html">
+                <img src="../static/images/charactersImages/минситар.png" alt="картинка">
+            </a>
+                <p class="ww">Minsittar</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="harith.html">
+                <img src="../static/images/charactersImages/харит.png" alt="картинка">
+            </a>
+                <p class="ww">Harith</p>
+        </div>
+    <!-- </div>
+    <div class="set"> -->
+        <div class="conteiner fighter">
+            <a href="thamuz.html">
+                <img src="../static/images/charactersImages/тамуз.png" alt="картинка">
+            </a>
+                <p class="ww">Thamuz</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="kimmy.html">
+                <img src="../static/images/charactersImages/кимми.png" alt="картинка">
+            </a>
+                <p class="ww">Kimmy</p>
+        </div>
+        <div class="conteiner tank">
+            <a href="belerik.html">
+                <img src="../static/images/charactersImages/белерик.png" alt="картинка">
+            </a>
+                <p class="ww">Belerik</p>
+        </div>
+        <div class="conteiner assassin">
+            <a href="hanzo.html">
+                <img src="../static/images/charactersImages/ханзо.png" alt="картинка">
+            </a>
+                <p class="ww">Hanzo</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="lunox.html">
+                <img src="../static/images/charactersImages/люнокс.png" alt="картинка">
+            </a>
+                <p class="ww">Lunox</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="leomord.html">
+                <img src="../static/images/charactersImages/леоморд.png" alt="картинка">
+            </a>
+                <p class="ww">Leomord</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="vail.html">
+                <img src="../static/images/charactersImages/вэйл.png" alt="картинка">
+            </a>
+                <p class="ww">Vail</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="klaud.html">
+                <img src="../static/images/charactersImages/клауд.png" alt="картинка">
+            </a>
+                <p class="ww">Klaud</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="aldos.html">
+                <img src="../static/images/charactersImages/алдос.png" alt="картинка">
+            </a>
+                <p class="ww">Aldos</p>
+        </div>
+    <!-- </div>
+    <div class="set"> -->
+        <div class="conteiner mage assassin">
+            <a href="selena.html">
+                <img src="../static/images/charactersImages/селена.png" alt="картинка">
+            </a>
+                <p class="ww">Selena</p>
+        </div>
+        <div class="conteiner support fighter">
+            <a href="kaya.html">
+                <img src="../static/images/charactersImages/кая.png" alt="картинка">
+            </a>
+                <p class="ww">Kaya</p>
+        </div>
+        <div class="conteiner ">
+            <a href="chane.html">
+                <img src="../static/images/charactersImages/чанэ.png" alt="картинка">
+            </a>
+                <p class="ww">Chan E</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="hanaby.html">
+                <img src="../static/images/charactersImages/ханаби.png" alt="картинка">
+            </a>
+                <p class="ww">Hanaby</p>
+        </div>
+        <div class="conteiner tank fighter">
+            <a href="uranus.html">
+                <img src="../static/images/charactersImages/уранус.png" alt="картинка">
+            </a>
+                <p class="ww">Uranus</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="martis.html">
+                <img src="../static/images/charactersImages/мартис.png" alt="картинка">
+            </a>
+                <p class="ww">Martis</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="valir.html">
+                <img src="../static/images/charactersImages/валир.png" alt="картинка">
+            </a>
+                <p class="ww">Valir</p>
+        </div>
+        <div class="conteiner assassin">
+            <a href="gossen.html">
+                <img src="../static/images/charactersImages/госсен.png" alt="картинка">
+            </a>
+                <p class="ww">Gossen</p>
+        </div>
+        <div class="conteiner support">
+            <a href="angela.html">
+                <img src="../static/images/charactersImages/ангела.png" alt="картинка">
+            </a>
+                <p class="ww">Angela</p>
+        </div>
+    <!-- </div>
+    <div class="set"> -->
+        <div class="conteiner fighter">
+            <a href="kusaka.html">
+                <img src="../static/images/charactersImages/кусака.png" alt="картинка">
+            </a>
+                <p class="ww">Kusaka</p>
+        </div>
+        <div class="conteiner shooter assassin">
+            <a href="lesly.html">
+                <img src="../static/images/charactersImages/лесли.png" alt="картинка">
+            </a>
+                <p class="ww">Lesly</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="fasha.html">
+                <img src="../static/images/charactersImages/фаша.png" alt="картинка">
+            </a>
+                <p class="ww">Fasha</p>
+        </div>
+        <div class="conteiner assassin">
+            <a href="helcurt.html">
+                <img src="../static/images/charactersImages/хелкарт.png" alt="картинка">
+            </a>
+                <p class="ww">Helcurt</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="zask.html">
+                <img src="../static/images/charactersImages/заск.png" alt="картинка">
+            </a>
+                <p class="ww">Zask</p>
+        </div>
+        <div class="conteiner tank">
+            <a href="hilos.html">
+                <img src="../static/images/charactersImages/хилос.png" alt="картинка">
+            </a>
+                <p class="ww">Hilos</p>
+        </div>
+        <div class="conteiner support">
+            <a href="diggy.html">
+                <img src="../static/images/charactersImages/дигги.png" alt="картинка">
+            </a>
+                <p class="ww">Diggy</p>
+        </div>
+        <div class="conteiner assassin">
+            <a href="lancelot.html">
+                <img src="../static/images/charactersImages/ланселот.png" alt="картинка">
+            </a>
+                <p class="ww">Lancelot</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="odetta.html">
+                <img src="../static/images/charactersImages/одетта.png" alt="картинка">
+            </a>
+                <p class="ww">Odetta</p>
+        </div>
+    <!-- </div>
+    <div class="set"> -->
+        <div class="conteiner fighter">
+            <a href="argus.html">
+                <img src="../static/images/charactersImages/аргус.png" alt="картинка">
+            </a>
+                <p class="ww">Argus</p>
+        </div>
+        <div class="conteiner tank fighter">
+            <a href="grock.html">
+                <img src="../static/images/charactersImages/грок.png" alt="картинка">
+            </a>
+                <p class="ww">Grock</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="iritel.html">
+                <img src="../static/images/charactersImages/иритель.png" alt="картинка">
+            </a>
+                <p class="ww">Iritel</p>
+        </div>
+        <div class="conteiner mage assassin">
+            <a href="harley.html">
+                <img src="../static/images/charactersImages/харли.png" alt="картинка">
+            </a>
+                <p class="ww">Harley</p>
+        </div>
+        <div class="conteiner tank fighter">
+            <a href="gototkacha.html">
+                <img src="../static/images/charactersImages/гототкача.png" alt="картинка">
+            </a>
+                <p class="ww">Gototkacha</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="karrie.html">
+                <img src="../static/images/charactersImages/кэрри.png" alt="картинка">
+            </a>
+                <p class="ww">Karrie</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="roger.html">
+                <img src="../static/images/charactersImages/роджер.png" alt="картинка">
+            </a>
+                <p class="ww">Roger</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="veksana.html">
+                <img src="../static/images/charactersImages/вексана.png" alt="картинка">
+            </a>
+                <p class="ww">Veksana</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="lapulapu.html">
+                <img src="../static/images/charactersImages/лапулапу.png" alt="картинка">
+            </a>
+                <p class="ww">Lapu-Lapu</p>
+        </div>
+    <!-- </div>
+    <div class="set"> -->
+        <div class="conteiner mage">
+            <a href="aurora.html">
+                <img src="../static/images/charactersImages/аврора.png" alt="картинка">
+            </a>
+                <p class="ww">Aurora</p>
+        </div>
+        <div class="conteiner tank fighter">
+            <a href="hilda.html">
+                <img src="../static/images/charactersImages/хильда.png" alt="картинка">
+            </a>
+                <p class="ww">Hilda</p>
+        </div>
+        <div class="conteiner support">
+            <a href="estes.html">
+                <img src="../static/images/charactersImages/эстэс.png" alt="картинка">
+            </a>
+                <p class="ww">Estes</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="cyclops.html">
+                <img src="../static/images/charactersImages/циклоп.png" alt="картинка">
+            </a>
+                <p class="ww">Cyclops</p>
+        </div>
+        <div class="conteiner support tank">
+            <a href="jonson.html">
+                <img src="../static/images/charactersImages/джонсон.png" alt="картинка">
+            </a>
+                <p class="ww">Jonson</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="moskov.html">
+                <img src="../static/images/charactersImages/москов.png" alt="картинка">
+            </a>
+                <p class="ww">Moskov</p>
+        </div>
+        <div class="conteiner assassin">
+            <a href="yisunshin.html">
+                <img src="../static/images/charactersImages/лисунсин.png" alt="картинка">
+            </a>
+                <p class="ww">Yi Sun-shin</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="ruby.html">
+                <img src="../static/images/charactersImages/руби.png" alt="картинка">
+            </a>
+                <p class="ww">Ruby</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="alfa.html">
+                <img src="../static/images/charactersImages/альфа.png" alt="картинка">
+            </a>
+                <p class="ww">Alfa</p>
+        </div>
+    <!-- </div>
+    <div class="set"> -->
+        <div class="conteiner fighter">
+            <a href="san.html">
+                <img src="../static/images/charactersImages/сан.png" alt="картинка">
+            </a>
+                <p class="ww">San</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="chou.html">
+                <img src="../static/images/charactersImages/чу.png" alt="картинка">
+            </a>
+                <p class="ww">Chou</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="kagura.html">
+                <img src="../static/images/charactersImages/кагура.png" alt="картинка">
+            </a>
+                <p class="ww">Kagura</p>
+        </div>
+        <div class="conteiner assassin">
+            <a href="natalia.html">
+                <img src="../static/images/charactersImages/наталья.png" alt="картинка">
+            </a>
+                <p class="ww">Natalia</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="gord.html">
+                <img src="../static/images/charactersImages/горд.png" alt="картинка">
+            </a>
+                <p class="ww">Gord</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="freya.html">
+                <img src="../static/images/charactersImages/фрэйя.png" alt="картинка">
+            </a>
+                <p class="ww">Freya</p>
+        </div>
+        <div class="conteiner assassin">
+            <a href="hayabusa.html">
+                <img src="../static/images/charactersImages/хаябуса.png" alt="картинка">
+            </a>
+                <p class="ww">Hayabusa</p>
+        </div>
+        <div class="conteiner tank support">
+            <a href="lolita.html">
+                <img src="../static/images/charactersImages/лолита.png" alt="картинка">
+            </a>
+                <p class="ww">Lolita</p>
+        </div>
+        <div class="conteiner tank support">
+            <a href="minotavr.html">
+                <img src="../static/images/charactersImages/минотавр.png" alt="картинка">
+            </a>
+                <p class="ww">Minotavr</p>
+        </div>
+    <!-- </div>
+    <div class="set"> -->
+        <div class="conteiner shooter">
+            <a href="leyla.html">
+                <img src="../static/images/charactersImages/лейла.png" alt="картинка">
+            </a>
+                <p class="ww">Leyla</p>
+        </div>
+        <div class="conteiner assassin">
+            <a href="fanny.html">
+                <img src="../static/images/charactersImages/фанни.png" alt="картинка">
+            </a>
+                <p class="ww">Fanny</p>
+        </div>
+        <div class="conteiner assassin fighter">
+            <a href="zilong.html">
+                <img src="../static/images/charactersImages/зилонг.png" alt="картинка">
+            </a>
+                <p class="ww">Zilong</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="eydora.html">
+                <img src="../static/images/charactersImages/эйдора.png" alt="картинка">
+            </a>
+                <p class="ww">Eydora</p>
+        </div>
+        <div class="conteiner support">
+            <a href="rafael.html">
+                <img src="../static/images/charactersImages/рафаэль.png" alt="картинка">
+            </a>
+                <p class="ww">Rafael</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="klint.html">
+                <img src="../static/images/charactersImages/клинт.png" alt="картинка">
+            </a>
+                <p class="ww">Klint</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="bruno.html">
+                <img src="../static/images/charactersImages/бруно.png" alt="картинка">
+            </a>
+                <p class="ww">Bruno</p>
+        </div>
+        <div class="conteiner fighter mage">
+            <a href="bane.html">
+                <img src="../static/images/charactersImages/бэйн.png" alt="картинка">
+            </a>
+                <p class="ww">Bane</p>
+        </div>
+        <div class="conteiner tank">
+            <a href="franko.html">
+                <img src="../static/images/charactersImages/франко.png" alt="картинка">
+            </a>
+                <p class="ww">Franko</p>
+        </div>
+    <!-- </div>
+    <div class="set"> -->
+        <div class="conteiner tank">
+            <a href="akai.html">
+                <img src="../static/images/charactersImages/акай.png" alt="картинка">
+            </a>
+                <p class="ww">Akai</p>
+        </div>
+        <div class="conteiner assassin">
+            <a href="karina.html">
+                <img src="../static/images/charactersImages/карина.png" alt="картинка">
+            </a>
+                <p class="ww">Karina</p>
+        </div>
+        <div class="conteiner assassin fighter">
+            <a href="alucard.html">
+                <img src="../static/images/charactersImages/алукард.png" alt="картинка">
+            </a>
+                <p class="ww">Alucard</p>
+        </div>
+        <div class="conteiner tank">
+            <a href="tigril.html">
+                <img src="../static/images/charactersImages/тигрил.png" alt="картинка">
+            </a>
+                <p class="ww">Tigril</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="nana.html">
+                <img src="../static/images/charactersImages/нана.png" alt="картинка">
+            </a>
+                <p class="ww">Nana</p>
+        </div>
+        <div class="conteiner mage">
+            <a href="alice.html">
+                <img src="../static/images/charactersImages/алиса.png" alt="картинка">
+            </a>
+                <p class="ww">Alice</p>
+        </div>
+        <div class="conteiner assassin">
+            <a href="saber.html">
+                <img src="../static/images/charactersImages/сабер.png" alt="картинка">
+            </a>
+                <p class="ww">Saber</p>
+        </div>
+        <div class="conteiner fighter">
+            <a href="balmond.html">
+                <img src="../static/images/charactersImages/бальмонд.png" alt="картинка">
+            </a>
+                <p class="ww">Balmond</p>
+        </div>
+        <div class="conteiner shooter">
+            <a href="miya.html">
+                <img src="../static/images/charactersImages/мия.png" alt="картинка">
+            </a>
+                <p class="ww">Miya</p>
+        </div>
+    </div>
+</div> 
+
+        </div>
+    </div> 
+    <script>
+        function filterCharacters(role) {
+            const containers = document.querySelectorAll('.conteiner');
+            containers.forEach(container => {
+                if (!container.classList.contains(role)) {
+                    container.classList.add('hidden');
+                } else {
+                    container.classList.remove('hidden');
+                }
+            });
+        }
+
+        function showAllCharacters() {
+            const containers = document.querySelectorAll('.conteiner');
+            containers.forEach(container => {
+                container.classList.remove('hidden');
+            });
+        }
+    </script>
+</body>
+</html>

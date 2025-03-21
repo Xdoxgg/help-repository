@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Characters</title>
+    <!-- <link rel="stylesheet" href="static/styles/styles.css"> -->
+    <link rel="stylesheet" href="../static/styles/characters.css">
+    <link rel="stylesheet" type="text/css" href="css.css">
+</head>
+<style>
+
+
+
+    .conteiner {
+        margin: 15px; /* Add some space between characters */
+        display: inline-block; /* Позволяет располагать элементы в строку */
+        /* text-align: center; Центрирует текст под изображением */
+    }
+    .set {
+        margin-top: 20px; /* Add space above the character list */
+    }
+    .hidden {
+        display: none; /* Class to hide elements */
+    }
+    .ww {
+        margin-top: 5px; /* Уменьшает отступ сверху для имен */
+        font-size: 20px; /* Увеличиваем размер шрифта */
+        font-weight: bold; /* Делаем шрифт жирным */
+    }
+</style>
+<body>
+<div class="Centroo">
+    <p>
+        <a href="_index.html"><button>
+            <span class="button_top"> Back </span>
+        </button></a>
+        <a href="#" onclick="filterCharacters('shooter')"><button>
+            <span class="button_top"> Shooter </span>
+        </button></a>
+        <a href="#" onclick="filterCharacters('mage')"><button>
+            <span class="button_top"> Mage </span>
+        </button></a>
+        <a href="#" onclick="filterCharacters('assassin')"><button>
+            <span class="button_top"> Assassin </span>
+        </button></a>
+        <a href="#" onclick="filterCharacters('fighter')"><button>
+            <span class="button_top"> Fighter </span>
+        </button></a>
+        <a href="#" onclick="filterCharacters('tank')"><button>
+            <span class="button_top"> Tank </span>
+        </button></a>
+        <a href="#" onclick="filterCharacters('support')"><button>
+            <span class="button_top"> Support </span>
+        </button></a>
+        <a href="#" onclick="showAllCharacters()"><button>
+            <span class="button_top"> Show All </span>
+        </button></a>
+
+    </p>
+</div>
+
+<div class="centerr">
+    <div class="set" id="set_elements" >
+
+    </div>
+</div>
+
+<script>
+    
+    const characters = []; 
+    document.addEventListener("DOMContentLoaded", main);
+
+
+    async function main() {
+        await loadSuggestions(); // Ждем завершения асинхронной функции
+        addPageData(); // Затем выполняем синхронную функцию
+    }
+
+
+    async function loadSuggestions() {
+        try {
+            const response = await fetch("/api/characters"); // Запрос к вашему API
+            const data = await response.json(); // Предполагаем, что сервер возвращает JSON
+
+            characters.push(...data)
+        } catch (error) {
+            alert("Ошибка загрузки данных:", error);
+        }
+    }
+    
+    
+    function addPageData(){
+        
+        if (characters.length>0){
+            characters.forEach(el =>
+                {
+                    addCharacter(el.name,el.role,el.lore, el.img)
+                });
+        }
+    }
+    
+    function addCharacter(name, role, lore, img) {
+        const container = document.getElementById('set_elements');
+
+        // Создаем новый элемент div
+        const newDiv = document.createElement('div');
+        newDiv.className = 'conteiner '+role;//для выбора
+
+        // Добавляем HTML-код в новый элемент
+        newDiv.innerHTML = `
+                <a href="../Pages/_presentPage.html?param1=${name}&param2=${role}&param3=${lore}&param4=${img}">
+                    <img src="../static/images/charactersImages/${img}.png" alt="${name}">
+                </a>
+                <p class="ww">${name}</p>
+            `;
+
+        // Добавляем новый элемент в контейнер
+        container.appendChild(newDiv);
+    }
+
+
+    function filterCharacters(role) {
+        const containers = document.querySelectorAll('.conteiner');
+        containers.forEach(container => {
+            if (!container.classList.contains(role)) {
+                container.classList.add('hidden');
+            } else {
+                container.classList.remove('hidden');
+            }
+        });
+    }
+
+    function showAllCharacters() {
+        const containers = document.querySelectorAll('.conteiner');
+        containers.forEach(container => {
+            container.classList.remove('hidden');
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+body {
+    background-color: rgb(27, 31, 40);
+    /* Задаем цвет фона */
+    font-family: 'Roboto', sans-serif; /* Устанавливаем шрифт */
+    font-size: 18px; /* Устанавливаем размер шрифта */
+    line-height: 1.6; /* Увеличиваем межстрочный интервал */
+}
+
+h1 {
+    color: rgb(156, 114, 137);
+    font-size: 2.5em; /* Размер заголовка */
+}
+.Character {
+    text-align: center;
+    color: rgb(156, 114, 137);
+
+}
+h2 {
+    color: rgb(156, 114, 137);
+    font-size: 2em; /* Размер подзаголовка */
+}
+p {
+    color: #D8BFD8
+}
+a {
+    color: #D8BFD8
+}
+.ww {
+    color:  rgb(226, 157, 195);
+}
+.Vannn {
+    font-style: italic;
+}
+/* .Constr {
+    text-align:center;
+    font-size: 24;
+    /* background-color:rgb(27, 31, 40); */
+    /* color: rgb(160, 159, 243);
+    margin: 0;
+} */ 
+.Ccc {
+    width: 30%; /* Ширина блока меню */
+    padding: 15px; /* Внутренние отступы */
+    border-radius: 5px; /* Скругление углов */
+    /* display: flex; /* Используем Flexbox для размещения блоков в строку */
+    /* justify-content: space-between; /* Распределяем пространство между блоками */        
+    padding: 20px; /* Отступы вокруг контейнера */
+    /* text-align:start; */ 
+    display: inline-block;
+    margin-right: 20px; /* Отступ между блоками */
+    /* height: 100px;
+    width: 666px;  */
+    background-color: rgb(27, 31, 40);
+}
+/* .Ccc img {
+    max-width: 100%; /* Ограничиваем ширину изображения */
+    /* height: auto; /* Автоматическая высота для сохранения пропорций */
+/* }  */ 
+.conteiner {
+    margin: 20px;
+    margin-top: 50px;
+    /* display: inline; */
+    display: inline-block;
+    text-align: center;
+    /* height: 100px;
+    width: 666px;  */
+    background-color: rgb(27, 31, 40);
+    display: flex; /* Используем Flexbox для размещения элементов в строку */
+            align-items: flex-start; /* Выравнивание по верхнему краю */
+}
+.cont {
+    display: flex;
+    flex-direction: columb;
+    /* justify-content: center; */
+    /* justify-content:end; */
+    justify-content:space-between;
+  background-color:rgb(27, 31, 40);
+}
+.centerr {
+    text-align: center;
+
+}
+.red-rose {
+    font-family: "Red Rose", serif;
+    font-optical-sizing: auto;
+    /* font-weight: <weight>; */
+  }
