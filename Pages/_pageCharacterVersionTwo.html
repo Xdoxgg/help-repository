@@ -11,18 +11,20 @@
 <style>
 
 
-
     .conteiner {
         margin: 15px; /* Add some space between characters */
         display: inline-block; /* Позволяет располагать элементы в строку */
         /* text-align: center; Центрирует текст под изображением */
     }
+
     .set {
         margin-top: 20px; /* Add space above the character list */
     }
+
     .hidden {
         display: none; /* Class to hide elements */
     }
+
     .ww {
         margin-top: 5px; /* Уменьшает отступ сверху для имен */
         font-size: 20px; /* Увеличиваем размер шрифта */
@@ -31,44 +33,67 @@
 </style>
 <body>
 <div class="Centroo">
-    <p>
-        <a href="_index.html"><button>
-            <span class="button_top"> Back </span>
-        </button></a>
-        <a href="#" onclick="filterCharacters('shooter')"><button>
-            <span class="button_top"> Shooter </span>
-        </button></a>
-        <a href="#" onclick="filterCharacters('mage')"><button>
-            <span class="button_top"> Mage </span>
-        </button></a>
-        <a href="#" onclick="filterCharacters('assassin')"><button>
-            <span class="button_top"> Assassin </span>
-        </button></a>
-        <a href="#" onclick="filterCharacters('fighter')"><button>
-            <span class="button_top"> Fighter </span>
-        </button></a>
-        <a href="#" onclick="filterCharacters('tank')"><button>
-            <span class="button_top"> Tank </span>
-        </button></a>
-        <a href="#" onclick="filterCharacters('support')"><button>
-            <span class="button_top"> Support </span>
-        </button></a>
-        <a href="#" onclick="showAllCharacters()"><button>
-            <span class="button_top"> Show All </span>
-        </button></a>
 
+    <p>
+        <a href="_index.html">
+            <button>
+                <span class="button_top"> Back </span>
+            </button>
+        </a>
+        <a href="#" onclick="filterCharacters('shooter')">
+            <button>
+                <span class="button_top"> Shooter </span>
+            </button>
+        </a>
+        <a href="#" onclick="filterCharacters('mage')">
+            <button>
+                <span class="button_top"> Mage </span>
+            </button>
+        </a>
+        <a href="#" onclick="filterCharacters('assassin')">
+            <button>
+                <span class="button_top"> Assassin </span>
+            </button>
+        </a>
+        <a href="#" onclick="filterCharacters('fighter')">
+            <button>
+                <span class="button_top"> Fighter </span>
+            </button>
+        </a>
+        <a href="#" onclick="filterCharacters('tank')">
+            <button>
+                <span class="button_top"> Tank </span>
+            </button>
+        </a>
+        <a href="#" onclick="filterCharacters('support')">
+            <button>
+                <span class="button_top"> Support </span>
+            </button>
+        </a>
+        <a href="#" onclick="showAllCharacters()">
+            <button>
+                <span class="button_top"> Show All </span>
+            </button>
+        </a>
+        <input id="input-character" placeholder="Имя персонажа" >
+        <a href="#" onclick="showByName()">
+            <button>
+                <span class="button_top"> Найти </span>
+            </button>
+        </a>
     </p>
+
 </div>
 
 <div class="centerr">
-    <div class="set" id="set_elements" >
+    <div class="set" id="set_elements">
 
     </div>
 </div>
 
 <script>
-    
-    const characters = []; 
+
+    const characters = [];
     document.addEventListener("DOMContentLoaded", main);
 
 
@@ -88,24 +113,24 @@
             alert("Ошибка загрузки данных:", error);
         }
     }
-    
-    
-    function addPageData(){
-        
-        if (characters.length>0){
-            characters.forEach(el =>
-                {
-                    addCharacter(el.name,el.role,el.lore, el.img)
-                });
+
+
+    function addPageData() {
+
+        if (characters.length > 0) {
+            characters.forEach(el => {
+                addCharacter(el.name, el.role, el.lore, el.img)
+            });
         }
     }
-    
+
     function addCharacter(name, role, lore, img) {
         const container = document.getElementById('set_elements');
 
         // Создаем новый элемент div
         const newDiv = document.createElement('div');
-        newDiv.className = 'conteiner '+role;//для выбора
+        newDiv.id=name
+        newDiv.className = 'conteiner ' + role;//для выбора
 
         // Добавляем HTML-код в новый элемент
         newDiv.innerHTML = `
@@ -137,6 +162,23 @@
             container.classList.remove('hidden');
         });
     }
+
+    function showByName() {
+        let name = document.getElementById('input-character').value;
+        const containers = document.querySelectorAll('.conteiner');
+        containers.forEach(container => {
+            container.classList.add('hidden');
+        });
+        const container = document.getElementById(name);
+        if (container != null) {
+            container.classList.remove('hidden')
+        }
+        else{
+            alert('не найде персонаж')
+        }
+
+    }
+
 </script>
 </body>
 </html>
