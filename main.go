@@ -33,6 +33,13 @@ type User struct {
 	ID       int    `json:"id"`
 	Name     string `json:"name"`
 	Password string `json:"password"`
+	Role     string `json:"role"`
+}
+
+type DataTeam struct {
+	ID          int    `json:"id"`
+	Name        string `json:"name"`
+	Orientation string `json:"orientation"`
 }
 
 func connectDB() (*sql.DB, error) {
@@ -160,12 +167,143 @@ func getAllCharacters(db *sql.DB) ([]Character, error) {
 
 }
 
+// /////////////////////////
+func getAllTeamsDataHandler(w http.ResponseWriter, r *http.Request) {
+	db, err := connectDB()
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println(err)
+		return
+	}
+
+	characters, err := getAllTeamsData(db)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println(err)
+
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(characters)
+
+}
+
+func getAllTeamsData(db *sql.DB) ([]DataTeam, error) {
+	rows, err := db.Query("SELECT name, orientation FROM teams")
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	var characters []DataTeam
+	for rows.Next() {
+		var character DataTeam
+		err := rows.Scan(&character.Name, &character.Orientation)
+		characters = append(characters, character)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return characters, nil
+
+}
+
+func getAllTeamsToDataHandler(w http.ResponseWriter, r *http.Request) {
+	db, err := connectDB()
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println(err)
+		return
+	}
+
+	characters, err := getAllTeamsToData(db)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println(err)
+
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(characters)
+
+}
+
+func getAllTeamsToData(db *sql.DB) ([]IdToId, error) {
+	rows, err := db.Query("SELECT team_id, character_id FROM team_to_character")
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	var characters []IdToId
+	for rows.Next() {
+		var character IdToId
+		err := rows.Scan(&character.Id1, &character.Id2)
+		characters = append(characters, character)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return characters, nil
+
+}
+
+func getAllUsersHandler(w http.ResponseWriter, r *http.Request) {
+	db, err := connectDB()
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println(err)
+		return
+	}
+
+	characters, err := getAllUsers(db)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println(err)
+
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(characters)
+
+}
+
+func getAllUsers(db *sql.DB) ([]User, error) {
+	rows, err := db.Query("SELECT username, password, role FROM users")
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	var characters []User
+	for rows.Next() {
+		var character User
+		err := rows.Scan(&character.Name, &character.Password, &character.Role)
+		characters = append(characters, character)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return characters, nil
+
+}
+
 func handleRequest() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
 	http.Handle("/Pages/", http.StripPrefix("/Pages/", http.FileServer(http.Dir("./Pages/"))))
 	http.HandleFunc("/", index)
 	http.HandleFunc("/api/characters", getAllCharactersHandler)
 	http.HandleFunc("/api/teams", getAllTeamsHandler)
+	////////////////
+
+	http.HandleFunc("/api/teams_data", getAllTeamsDataHandler)
+	http.HandleFunc("/api/team_to_character", getAllTeamsToDataHandler)
+	http.HandleFunc("/api/users", getAllUsersHandler)
+
+	////////////
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		fmt.Println("Ошибка запуска сервера:", err)
