@@ -51,9 +51,11 @@
 </form>
 
 <script>
+
     async function fetchData() {
         const tableSelector = document.getElementById('tableSelector');
         const selectedTable = tableSelector.value;
+        updateFormFields(selectedTable); // Обновляем поля формы в зависимости от выбранной таблицы
 
         let response, data;
         try {
@@ -63,8 +65,8 @@
             }
 
             data = await response.json();
+            
             updateTable(data);
-            updateFormFields(selectedTable); // Обновляем поля формы в зависимости от выбранной таблицы
         } catch (error) {
             console.error('Ошибка при получении данных:', error);
         }
@@ -138,7 +140,6 @@
                 if (!response.ok) {
                     throw new Error('Ошибка при удалении элемента: ' + response.statusText);
                 }
-                alert('start')
                 
                 fetchData(); // Обновляем данные после удаления
             } catch (error) {
@@ -162,23 +163,31 @@
 
         try {
             let response;
+            let queryString = '';
+
+            // Формируем строку запроса
+            for (const [key, value] of Object.entries(formData)) {
+                queryString += `${encodeURIComponent(key)}=${encodeURIComponent(value)}&`;
+            }
+            // Удаляем последний символ '&'
+            queryString = queryString.slice(0, -1);
             if (id) {
                 // Обновление элемента
-                response = await fetch(`/api/${selectedTable}/update`, {
+                response = await fetch(`/api/${selectedTable}/update?${queryString}&id=${encodeURIComponent(id)}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ ...formData, id: parseInt(id) })
+                    body: JSON.stringify({ id: parseInt(id) }) // Отправляем id в теле запроса
                 });
             } else {
                 // Добавление нового элемента
-                response = await fetch(`/api/${selectedTable}`, {
+                response = await fetch(`/api/${selectedTable}_add?${queryString}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(formData)
+                    body: JSON.stringify(formData) // Отправляем formData в теле запроса
                 });
             }
 
@@ -197,7 +206,6 @@
     function updateFormFields(selectedTable) {
         const formFields = document.getElementById('formFields');
         formFields.innerHTML = ''; // Очищаем предыдущие поля
-
         let fields;
         if (selectedTable === 'characters') {
             fields = [
@@ -206,7 +214,7 @@
                 { name: 'lore', label: 'Лор' },
                 { name: 'img', label: 'Изображение URL' }
             ];
-        } else if (selectedTable === 'teams') {
+        } else if (selectedTable === 'teams_data') {
             fields = [
                 { name: 'name', label: 'Имя' },
                 { name: 'orientation', label: 'Ориентация' }

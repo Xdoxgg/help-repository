@@ -1,8 +1,8 @@
 ﻿-- Удаление таблиц, если они существуют
-DROP TABLE IF EXISTS characters;
-DROP TABLE IF EXISTS teams;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS team_to_character;
+DROP TABLE IF EXISTS characters CASCADE;
+DROP TABLE IF EXISTS teams CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS team_to_character CASCADE;
 
 -- Создание таблицы characters
 CREATE TABLE characters

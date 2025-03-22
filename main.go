@@ -274,7 +274,7 @@ func getAllUsersHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllUsers(db *sql.DB) ([]User, error) {
-	rows, err := db.Query("SELECT username, password, role FROM users")
+	rows, err := db.Query("SELECT * FROM users")
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -283,7 +283,7 @@ func getAllUsers(db *sql.DB) ([]User, error) {
 	var characters []User
 	for rows.Next() {
 		var character User
-		err := rows.Scan(&character.Name, &character.Password, &character.Role)
+		err := rows.Scan(&character.ID, &character.Name, &character.Password, &character.Role)
 		characters = append(characters, character)
 		if err != nil {
 			return nil, err
@@ -406,7 +406,6 @@ func deleteCharactersHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Выполняем SQL-запрос на удаление
 	_, err = db.Exec(`
-DELETE FROM team_to_character WHERE team_id = $1
 DELETE FROM characters WHERE id = $1
 `, id)
 	if err != nil {
@@ -421,6 +420,7 @@ DELETE FROM characters WHERE id = $1
 
 func deleteUsersHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodDelete {
+		fmt.Println("err")
 		http.Error(w, "Метод не разрешен", http.StatusMethodNotAllowed)
 		return
 	}
@@ -447,9 +447,10 @@ func deleteUsersHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer db.Close()
-
+	fmt.Println("start")
 	// Выполняем SQL-запрос на удаление
-	_, err = db.Exec("DELETE FROM users WHERE id = $1", id)
+	fmt.Println(id)
+	_, err = db.Exec(`DELETE FROM users WHERE id = $1`, id)
 	if err != nil {
 		fmt.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -458,6 +459,109 @@ func deleteUsersHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Возвращаем статус 204 No Content
 	w.WriteHeader(http.StatusNoContent)
+}
+
+func addCharacterHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		return
+	}
+	db, err := connectDB()
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+	img := r.URL.Query().Get("img")
+	name := r.URL.Query().Get("name")
+	role := r.URL.Query().Get("role")
+	lore := r.URL.Query().Get("lore")
+	// Выполняем SQL-запрос на удаление
+	_, err = db.Exec(`
+INSERT INTO characters (name, role, lore, talents_build_emblems)
+VALUES ($1, $2, $3, $4);
+
+`, name, role, lore, img)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+//teams /api/teams_data/update?name=newteam&orientation=s&id=
+//teasm_items/api/team_to_character/update?team_id=1&character_id=1&id=
+//users/api/users/update?name=as&password=s&id=
+
+func addTeamDataHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		return
+	}
+	db, err := connectDB()
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+	name := r.URL.Query().Get("name")
+	orientation := r.URL.Query().Get("orientation")
+
+	_, err = db.Exec(`INSERT INTO teams (name, orientation)
+VALUES ($1, $2);`, name, orientation)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func addTeamLoCharacterHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		fmt.Println("err")
+		return
+	}
+	db, err := connectDB()
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+	tId := r.URL.Query().Get("team_id")
+	cId := r.URL.Query().Get("character_id")
+
+	_, err = db.Exec(`INSERT INTO team_to_character (team_id, character_id)
+VALUES ($1, $2);`, tId, cId)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func addUsersHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		return
+	}
+	db, err := connectDB()
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+	name := r.URL.Query().Get("name")
+	password := r.URL.Query().Get("password")
+
+	_, err = db.Exec(`
+INSERT INTO users (username, password, role) VALUES
+    ($1, $2, $3);`, name, password, 0)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 func handleRequest() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
@@ -474,6 +578,10 @@ func handleRequest() {
 	http.HandleFunc("/api/teams_data_delete", deleteTeamHandler)
 	http.HandleFunc("/api/characters_delete", deleteCharactersHandler)
 	http.HandleFunc("/api/users_delete", deleteUsersHandler)
+	http.HandleFunc("/api/characters_add", addCharacterHandler)
+	http.HandleFunc("/api/users_add", addUsersHandler)
+	http.HandleFunc("/api/team_to_character_add", addTeamLoCharacterHandler)
+	http.HandleFunc("/api/teams_data_add", addTeamDataHandler)
 
 	////////////
 	err := http.ListenAndServe(":8080", nil)
